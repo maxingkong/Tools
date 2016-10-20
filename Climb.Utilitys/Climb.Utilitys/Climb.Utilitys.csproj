@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6EC93A46-4C99-43F4-A636-0D1590611B08}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Climb.Utilitys</RootNamespace>
+    <AssemblyName>Climb.Utilitys</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CloneExt.cs" />
+    <Compile Include="CollectionsExt\BloomFilter.cs" />
+    <Compile Include="CollectionsExt\ComparisonHelper.cs" />
+    <Compile Include="CollectionsExt\EqualityHelper.cs" />
+    <Compile Include="CollectionsExt\SyncDictionary.cs" />
+    <Compile Include="CollectionsExt\SyncList.cs" />
+    <Compile Include="Compression.cs" />
+    <Compile Include="ConvertHelper.cs" />
+    <Compile Include="ExpressionHelper.cs" />
+    <Compile Include="Extended.cs" />
+    <Compile Include="IOExt\DirectoryExt.cs" />
+    <Compile Include="IOExt\FileExt.cs" />
+    <Compile Include="IsBetween.cs" />
+    <Compile Include="MathExt\MathHelper.cs" />
+    <Compile Include="ParamterCheckExt.cs" />
+    <Compile Include="PatternExt\Singleton.cs" />
+    <Compile Include="Performance\CodeRAM.cs" />
+    <Compile Include="Performance\CodeTimer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs" />
+    <Compile Include="QueueServer.cs" />
+    <Compile Include="SystemExt\ArraryExt.cs" />
+    <Compile Include="SystemExt\ByteExt.cs" />
+    <Compile Include="SystemExt\DateTimeExt.cs" />
+    <Compile Include="SystemExt\DictionaryExt.cs" />
+    <Compile Include="SystemExt\EnumExtension.cs" />
+    <Compile Include="SystemExt\ExceptionExt.cs" />
+    <Compile Include="SystemExt\IntExt.cs" />
+    <Compile Include="SystemExt\ObjectExt.cs" />
+    <Compile Include="SystemExt\RandomExt.cs" />
+    <Compile Include="SystemExt\ReflectionExt.cs" />
+    <Compile Include="SystemExt\RegexExt.cs" />
+    <Compile Include="SystemExt\SerializeExt.cs" />
+    <Compile Include="SystemExt\StringExt.cs" />
+    <Compile Include="SystemExt\TaskExt.cs" />
+    <Compile Include="SystemExt\TypeExt.cs" />
+    <Compile Include="Tools.cs" />
+    <Compile Include="TypeConvert.cs" />
+    <Compile Include="ValidatorExt\ValidatorHelper.cs" />
+    <Compile Include="WhereIfExtension.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
