@@ -11,11 +11,12 @@
 * 备注描述：
 *           
 *************************************************/
+
 using System;
 using System.Collections.Generic;
 using System.Threading;
 
-namespace Climb.Utility
+namespace Climb.Utilitys.CollectionsExt
 {
     /// <summary>
     /// 提供一个队列的线程处理
@@ -69,7 +70,7 @@ namespace Climb.Utility
             }
             if ((_thread != null) && _thread.IsAlive) return;
             CreateThread();
-            _thread.Start();
+            if (_thread != null) _thread.Start();
         }
 
         public void ClearItems()
@@ -86,15 +87,14 @@ namespace Climb.Utility
 
         private void CreateThread()
         {
-            _thread = new Thread(new ThreadStart(ThreadProc));
-            _thread.IsBackground = _isBackground;
+            _thread = new Thread(ThreadProc) {IsBackground = _isBackground};
         }
 
         private void ThreadProc()
         {
-            T item = default(T);
             while (true)
             {
+                T item;
                 lock (_queue)
                 {
                     if (_queue.Count > 0)
@@ -112,6 +112,7 @@ namespace Climb.Utility
                 }
                 catch
                 {
+                    // ignored
                 }
             }
         }
