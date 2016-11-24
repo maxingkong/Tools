@@ -17,7 +17,7 @@ using System.Collections.Generic;
 
 namespace Climb.Utilitys.CollectionsExt
 {
-    /// <summary>
+    /// <summary> 
     /// 比较辅助类，用于快速创建<see cref="IComparer&lt;T&gt;"/>接口的实例
     /// </summary>
     /// <example>

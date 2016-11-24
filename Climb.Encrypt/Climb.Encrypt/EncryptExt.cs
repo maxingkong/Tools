@@ -178,7 +178,12 @@ namespace Climb.Encrypt
         #endregion
 
         #region SHA1 加密
-
+        /// <summary>
+        /// SHA1 加密
+        /// </summary>
+        /// <param name="dataSource">密文</param>
+        /// <param name="key">加密key</param>
+        /// <returns></returns>
         public static string Hmacsha1(string dataSource, string key)
         {
             byte[] byteBuffer = Encoding.ASCII.GetBytes(key);
@@ -274,7 +279,11 @@ namespace Climb.Encrypt
         #endregion
 
         #region SHA384加密
-
+        /// <summary>
+        /// SHA384加密  
+        /// </summary>
+        /// <param name="str">需要加密字符串</param>
+        /// <returns></returns>
         public static string Sha384(string str)
         {
             byte[] sha384Data = Encoding.UTF8.GetBytes(str);
@@ -286,7 +295,11 @@ namespace Climb.Encrypt
         #endregion
 
         #region SHA512加密
-
+        /// <summary>
+        /// Sha512
+        /// </summary>
+        /// <param name="str">需要加密的字符串</param>
+        /// <returns></returns>
         public static string Sha512(string str)
         {
             byte[] sha512Data = Encoding.UTF8.GetBytes(str);

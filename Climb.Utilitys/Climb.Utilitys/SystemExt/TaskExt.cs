@@ -12,15 +12,12 @@ namespace Climb.Utilitys.SystemExt
     /// </summary>
     public static  class TaskExt
     {
-        /// <summary>获取Task结果的扩展
+        /// <summary>
+        /// 等待某个时间之后获取task的值
         /// </summary>
         public static TResult WaitResult<TResult>(this Task<TResult> task, int timeoutMillis)
         {
-            if (task.Wait(timeoutMillis))
-            {
-                return task.Result;
-            }
-            return default(TResult);
+            return task.Wait(timeoutMillis) ? task.Result : default(TResult);
         }
 
         /// <summary>设置Task过期时间

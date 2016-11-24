@@ -42,7 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CookieHelper.cs" />
-    <Compile Include="HtmlHelper.cs" />
     <Compile Include="HttpRequestHelper.cs" />
     <Compile Include="JavaScript.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

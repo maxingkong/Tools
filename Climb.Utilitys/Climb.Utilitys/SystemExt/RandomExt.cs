@@ -43,8 +43,7 @@ namespace Climb.Utilitys.SystemExt
         /// <returns></returns>
         public static int GetRandomInt()
         {
-            Random randRandom = new Random(Guid.NewGuid().GetHashCode());
-            return randRandom.Next(1, int.MaxValue);
+            return GetRandomInt(1, int.MaxValue);
         }
         #endregion
 
@@ -95,7 +94,7 @@ namespace Climb.Utilitys.SystemExt
         /// <returns></returns>
         public static bool NextBool(this Random random)
         {
-            return random.NextDouble() > 0.5;
+            return GetRandomDouble()> 0.5;
         }
         #endregion
 
@@ -211,23 +210,6 @@ namespace Climb.Utilitys.SystemExt
         }
         #endregion
 
-        #region 随机枚举
-        /// <summary>
-        /// 随机一个枚举
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public static T NextEnum<T>()
-    where T : struct
-        {
-            Random randRandom = new Random(Guid.NewGuid().GetHashCode());
-            Type type = typeof(T);
-            if (type.IsEnum == false) throw new InvalidOperationException();
-
-            var array = Enum.GetValues(type);
-            var index = randRandom.Next(array.GetLowerBound(0), array.GetUpperBound(0) + 1);
-            return (T)array.GetValue(index);
-        }
-        #endregion
+       
     }
 }
