@@ -87,7 +87,7 @@ namespace Climb.Core
         /// 释放资源
         /// </summary>
         public void Dispose()
-        {
+        { 
             this.Dispose(true);
             GC.SuppressFinalize(true);
         }
