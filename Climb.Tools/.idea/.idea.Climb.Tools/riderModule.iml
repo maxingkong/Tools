@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="RIDER_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$/../../../Climb.Core/Climb.Core">
+      <sourceFolder url="file://$MODULE_DIR$/../../../Climb.Core/Climb.Core" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../Climb.Core/Climb.Core/bin" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../Climb.Core/Climb.Core/obj" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../../Climb.Data/Climb.Data">
+      <sourceFolder url="file://$MODULE_DIR$/../../../Climb.Data/Climb.Data" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../Climb.Data/Climb.Data/bin" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../Climb.Data/Climb.Data/obj" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../../Climb.Encrypt/Climb.Encrypt">
+      <sourceFolder url="file://$MODULE_DIR$/../../../Climb.Encrypt/Climb.Encrypt" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../Climb.Encrypt/Climb.Encrypt/bin" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../Climb.Encrypt/Climb.Encrypt/obj" />
+    </content>
+    <content url="file://$MODULE_DIR$/../..">
+      <excludeFolder url="file://$MODULE_DIR$/../../packages" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../../Climb.Utilitys/Climb.Utilitys">
+      <sourceFolder url="file://$MODULE_DIR$/../../../Climb.Utilitys/Climb.Utilitys" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../Climb.Utilitys/Climb.Utilitys/bin" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../Climb.Utilitys/Climb.Utilitys/obj" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../../Climb.WebUtility/Climb.WebUtility">
+      <sourceFolder url="file://$MODULE_DIR$/../../../Climb.WebUtility/Climb.WebUtility" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../Climb.WebUtility/Climb.WebUtility/bin" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../Climb.WebUtility/Climb.WebUtility/obj" />
+    </content>
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>

@@ -11,7 +11,7 @@ namespace Climb.Core
         /// <summary>
         /// 用户没有登录
         /// </summary>
-        [Description("没有登录")]
+        [Description("没有登录111对对对1")]
         NoLogin,
         /// <summary>
         /// 登录失败
