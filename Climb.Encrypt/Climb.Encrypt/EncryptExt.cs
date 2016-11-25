@@ -295,7 +295,7 @@ namespace Climb.Encrypt
         #endregion
 
         #region SHA512加密
-        /// <summary>
+        /// <summary>n
         /// Sha512
         /// </summary>
         /// <param name="str">需要加密的字符串</param>
@@ -313,52 +313,17 @@ namespace Climb.Encrypt
 
         #endregion
 
-        #region QQ密码加密的方法
-
-        /*
-            加密思路：它的原理是，先把你的密码进行3次(大家熟知的)MD5 32位加密，再把加密后的字符串与验证码组合起来，最后MD5加密一次。
-         */
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="password"></param>
-        /// <param name="verifyCode"></param>
-        /// <returns></returns>
-        public static string EncodePasswordWithVerifyCode(string password, string verifyCode)
-        {
-            return MD5_32(MD5_3(password) + verifyCode.ToUpper());
-        }
-
-        /// <summary>
-        /// 实现md5 加密三次
-        /// </summary>
-        /// <param name="arg"></param>
-        /// <returns></returns>
-        private static string MD5_3(string arg)
-        {
-            MD5 md5 = MD5.Create();
-            byte[] buffer = Encoding.ASCII.GetBytes(arg);
-            buffer = md5.ComputeHash(buffer);
-            buffer = md5.ComputeHash(buffer);
-            buffer = md5.ComputeHash(buffer);
-            return BitConverter.ToString(buffer).Replace("-", "").ToUpper();
-        }
-
-        #endregion
-
-        #region Rsa 加密
+        #region Rsa 加密 解密 获取私钥的方法
         //一般流程用户A用B的公钥对KEY进行加密，B收到信息后用自己的私钥进行解密获得KEY
         /// <summary>
         /// RSA获取公钥私钥
         /// </summary>
-        /// <param name="strPrivateKey"></param>
-        /// <param name="strPublicKey"></param>
+        /// <param name="strPrivateKey">返回私钥</param>
+        /// <param name="strPublicKey">公钥</param>
         public void RsaCreateKey(ref string strPublicKey, ref string strPrivateKey)
         {
             if (strPublicKey == null) throw new ArgumentNullException("strPublicKey");
             RSACryptoServiceProvider rsa = new RSACryptoServiceProvider(512);
-            //str_PublicKey = Convert.ToBase64String(RSA.ExportCspBlob(false));
-            //str_PrivateKey = Convert.ToBase64String(RSA.ExportCspBlob(true));
 
             strPublicKey = rsa.ToXmlString(false);
             strPrivateKey = rsa.ToXmlString(true);
@@ -367,9 +332,9 @@ namespace Climb.Encrypt
         /// <summary>
         /// RSA加密
         /// </summary>
-        /// <param name="source"></param>
-        /// <param name="strPublicKey"></param>
-        /// <returns></returns>
+        /// <param name="source">需要加密的文本</param>
+        /// <param name="strPublicKey">需要加密的公钥</param>
+        /// <returns>返回加密串</returns>
         public string RsaEncrypt(string source, string strPublicKey)
         {
             try
@@ -378,14 +343,9 @@ namespace Climb.Encrypt
                 {
 
                     rsa.FromXmlString(strPublicKey);
-
-                    //str_PublicKey = Convert.ToBase64String(RSA.ExportCspBlob(false));
-                    //str_PrivateKey = Convert.ToBase64String(RSA.ExportCspBlob(true));
                     byte[] dataToEncrypt = Encoding.UTF8.GetBytes(source);
 
                     byte[] bs = rsa.Encrypt(dataToEncrypt, false);
-                    //str_PublicKey = Convert.ToBase64String(RSA.ExportCspBlob(false));
-                    //str_PrivateKey = Convert.ToBase64String(RSA.ExportCspBlob(true));
                     string encrypttxt = Convert.ToBase64String(bs);
 
                     return encrypttxt;
@@ -401,9 +361,9 @@ namespace Climb.Encrypt
         /// <summary>
         /// RSA解密
         /// </summary>
-        /// <param name="strRsa"></param>
-        /// <param name="strPrivateKey"></param>
-        /// <returns></returns>
+        /// <param name="strRsa">需解密的文本</param>
+        /// <param name="strPrivateKey">需要解密的私钥</param>
+        /// <returns>返回解密的文本</returns>
         public string RsaDecrypt(string strRsa, string strPrivateKey)
         {
             try
@@ -413,8 +373,6 @@ namespace Climb.Encrypt
                 using (RSACryptoServiceProvider rsa = new RSACryptoServiceProvider())
                 {
                     rsa.FromXmlString(strPrivateKey);
-                    //byte[] bsPrivatekey = Convert.FromBase64String(str_PrivateKey);
-                    //RSA.ImportCspBlob(bsPrivatekey);
 
                     byte[] bsdecrypt = rsa.Decrypt(dataToDecrypt, false);
 
