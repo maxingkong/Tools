@@ -1,4 +1,17 @@
-﻿using System;
+﻿/**************************************************
+* 文 件 名：BaseEntity.cs
+* 文件版本：1.0
+* 创 建 人：mxk
+* 联系方式：QQ:84664969   Email:84664969@qq.com   Phone:18513950591
+* 创建日期：2014/7/1 23:59:30
+* 文件说明：基类 实现了基础类。
+* 修 改 人：
+* 修改日期：
+* 备注描述：
+*
+**************************************************/
+
+using System;
 using System.IO;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -11,6 +24,9 @@ namespace Climb.Core
     [Serializable]
     public abstract class BaseEntity : ICloneable, IDisposable
     {
+        /// <summary>
+        /// 基类的主键
+        /// </summary>
         public int  PkId { get; }
 
 
@@ -28,7 +44,7 @@ namespace Climb.Core
         /// 判断两个实体是否是同一数据记录的实体
         /// </summary>
         /// <param name="obj">要比较的实体信息中的主键id</param>
-        /// <returns></returns>
+        /// <returns>如果是同一个对象那么返回ture 如果不是同一个对象返回false</returns>
         public override bool Equals(object obj)
         {
             BaseEntity entity = obj as BaseEntity;
@@ -39,7 +55,7 @@ namespace Climb.Core
         /// 用作特定类型的哈希函数。
         /// </summary>
         /// <returns>
-        /// 当前 <see cref="T:System.Object"/> 的哈希代码。
+        /// 当前对象ID的哈希代码。
         /// </returns>
         public override int GetHashCode()
         {
@@ -49,7 +65,7 @@ namespace Climb.Core
         /// <summary>
         /// 创建当前业务实体对象的一个副本。
         /// </summary>
-        /// <returns></returns>
+        /// <returns>返回当前的对象副本信息 深度克隆</returns>
         public object Clone()
         {
             using (MemoryStream buffer = new MemoryStream())
@@ -66,7 +82,7 @@ namespace Climb.Core
         /// 通过属性名称获取该属性值。
         /// </summary>
         /// <param name="name">属性名称</param>
-        /// <returns></returns>
+        /// <returns>获取属性的值</returns>
         public object GetPropertyValue(string name)
         {
             PropertyInfo pi = GetType().GetProperty(name);
@@ -89,6 +105,7 @@ namespace Climb.Core
         public void Dispose()
         { 
             this.Dispose(true);
+            // ReSharper disable once GCSuppressFinalizeForTypeWithoutDestructor
             GC.SuppressFinalize(true);
         }
 
