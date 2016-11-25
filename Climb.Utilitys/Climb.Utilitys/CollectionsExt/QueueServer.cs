@@ -22,20 +22,33 @@ namespace Climb.Utilitys.CollectionsExt
     /// 提供一个队列的线程处理
     /// </summary>
     /// <typeparam name="T">处理对象</typeparam>
-    public class QueueServer<T> 
+    public class QueueServer<T>:IDisposable
     {
-        private Thread _thread;//线程
+        #region 私有对象
         /// <summary>
-        /// 队列
+        /// 线程
+        /// </summary>
+        private Thread _thread;
+
+        /// <summary>
+        /// 异步队列
         /// </summary>
         private readonly Queue<T> _queue = new Queue<T>();
+
         /// <summary>
         /// 是否是后台线程
         /// </summary>
         private bool _isBackground = false;
 
-        private bool _disposed = false;
+        /// <summary>
+        ///dispose
+        /// </summary>
+        private readonly bool _disposed = false;
 
+
+        #endregion
+
+        #region 构造函数
         /// <summary>
         /// 构造函数
         /// </summary>
@@ -45,22 +58,29 @@ namespace Climb.Utilitys.CollectionsExt
             _disposed = disposed;
         }
 
-        //protected override void Dispose(bool disposing)
-        //{
-        //    try
-        //    {
-        //        if (!this.disposed)
-        //        {
-        //            this.ClearItems();
-        //        }
-        //    }
-        //    finally
-        //    {
-        //        base.Dispose(disposing);
-        //    }
-        //}
+        #endregion
 
         #region  公共方法
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            try
+            {
+                if (!_disposed)
+                {
+                    ClearItems();
+                }
+            }
+            finally
+            {
+                Dispose(disposing);
+            }
+        }
 
         public void EnqueueItem(T item)
         {
@@ -171,5 +191,7 @@ namespace Climb.Utilitys.CollectionsExt
         }
 
         #endregion
+
+
     }
 }
