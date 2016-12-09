@@ -44,19 +44,19 @@ namespace Climb.WebUtility
             {
                 return;
             }
-            HttpCookie cookie = WebTools .Request.Cookies[strName] ?? new HttpCookie(strName);
+            HttpCookie cookie = ContextExt .Request.Cookies[strName] ?? new HttpCookie(strName);
             cookie.Value = strValue;
 
             if (!string.IsNullOrEmpty(doMain))
             {
-                WebTools.Response.AddHeader("p3p", "CP=\"IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT\"");
+                ContextExt.Response.AddHeader("p3p", "CP=\"IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT\"");
                 cookie.Domain = doMain;
             }
             if (day != 0)
             {
                 cookie.Expires = DateTime.Now.AddDays(day);
             }
-            WebTools.Response.AppendCookie(cookie);
+            ContextExt.Response.AppendCookie(cookie);
         }
 
         /// <summary>
@@ -74,10 +74,10 @@ namespace Climb.WebUtility
             {
                 return;
             }
-            HttpCookie cookie = WebTools.Request.Cookies[strName];
+            HttpCookie cookie = ContextExt.Request.Cookies[strName];
             if (cookie == null) return;
             cookie.Domain = domainValue;
-            WebTools.Response.AppendCookie(cookie);
+            ContextExt.Response.AppendCookie(cookie);
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Climb.WebUtility
             }
             // 删除Cookie
             cookie.Expires = new DateTime(1900, 1, 1);
-            WebTools.Response.Cookies.Add(cookie);
+            ContextExt.Response.Cookies.Add(cookie);
 
         }
 
@@ -111,7 +111,7 @@ namespace Climb.WebUtility
         public static string GetCookie(string key)
         {
             string strValue = string.Empty;
-            HttpCookie cookie =WebTools.Request.Cookies[key];
+            HttpCookie cookie =ContextExt.Request.Cookies[key];
             if (cookie != null)
             {
                 strValue = cookie.Value;

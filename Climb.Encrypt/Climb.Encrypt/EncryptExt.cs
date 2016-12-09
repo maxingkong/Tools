@@ -383,7 +383,7 @@ namespace Climb.Encrypt
             }
             catch (CryptographicException e)
             {
-                return null;
+                return e.Message;
             }
         }
         #endregion

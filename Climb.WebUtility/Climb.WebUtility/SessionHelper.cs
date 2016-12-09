@@ -27,7 +27,7 @@ namespace Climb.WebUtility
         /// <param name="tObj"></param>
         public static void AddObject<T>(string key, T tObj)
         {
-            WebTools.Seession.Add(key,tObj);
+            ContextExt.Seession.Add(key,tObj);
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Climb.WebUtility
         /// <returns>Session对象值</returns>
         public static T GetObject<T>(string key)
         {
-            T t =(T) WebTools.Seession[key];
+            T t =(T) ContextExt.Seession[key];
             return t;
         }
 
@@ -78,7 +78,7 @@ namespace Climb.WebUtility
         /// <param name="key">Session对象名称</param>
         public static void RemoveObject(string key)
         {
-            WebTools.Seession.Remove(key);
+            ContextExt.Seession.Remove(key);
         }
     }
 

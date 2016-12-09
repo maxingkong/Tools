@@ -20,7 +20,7 @@ namespace Climb.WebUtility
     /// <summary>
     /// 常用web 工具类
     /// </summary>
-    public static class WebTools
+    public static class ContextExt
     {
         #region 类内部调用
 

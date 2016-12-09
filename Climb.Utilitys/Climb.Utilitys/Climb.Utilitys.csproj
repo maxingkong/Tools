@@ -32,6 +32,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,6 +49,9 @@
     <Compile Include="CollectionsExt\SyncList.cs" />
     <Compile Include="Compression.cs" />
     <Compile Include="ConvertHelper.cs" />
+    <Compile Include="ImgExt\ImageUtils.cs" />
+    <Compile Include="ImgExt\ThumbnailType.cs" />
+    <Compile Include="ImgExt\VerificationImage.cs" />
     <Compile Include="IOExt\DirectoryExt.cs" />
     <Compile Include="IOExt\FileExt.cs" />
     <Compile Include="IsBetween.cs" />

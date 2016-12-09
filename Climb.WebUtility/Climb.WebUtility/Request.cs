@@ -50,94 +50,13 @@ namespace Climb.WebUtility
         #region 获取Form表单数据
 
         /// <summary>
-        /// 获取表单中的Float数据类型
-        /// </summary>
-        /// <param name="strName">表单名称</param>
-        /// <param name="defValue">默认值</param>
-        /// <returns></returns>
-        public static float GetFormFloat(string strName, float defValue)
-        {
-            return StrToFloat(HttpContext.Current.Request.Form[strName], defValue);
-        }
-
-        /// <summary>
-        /// 获取表单中的Int数据类型
-        /// </summary>
-        /// <param name="strName">表单名称</param>
-        /// <param name="defValue">默认值</param>
-        /// <returns></returns>
-        public static int GetFormInt(string strName, int defValue)
-        {
-            return StrToInt(HttpContext.Current.Request.Form[strName], defValue);
-        }
-        private static int StrToInt(string str, int defValue)
-        {
-            int num;
-            if (!((!string.IsNullOrEmpty(str) && (str.Trim().Length < 11)) && Regex.IsMatch(str.Trim(), @"^([-]|[0-9])[0-9]*(\.\w*)?$")))
-            {
-                return defValue;
-            }
-            if (int.TryParse(str, out num))
-            {
-                return num;
-            }
-            return Convert.ToInt32(StrToFloat(str, (float)defValue));
-        }
-        /// <summary>
-        /// 将string转换成Float
-        /// </summary>
-        /// <param name="strValue">需要转换的字符串</param>
-        /// <param name="defValue">默认值</param>
-        /// <returns></returns>
-        private static float StrToFloat(string strValue, float defValue)
-        {
-            if ((strValue == null) || (strValue.Length > 10))
-            {
-                return defValue;
-            }
-            float result = defValue;
-            if ((strValue != null) && Regex.IsMatch(strValue, @"^([-]|[0-9])[0-9]*(\.\w*)?$"))
-            {
-                float.TryParse(strValue, out result);
-            }
-            return result;
-        }
-        /// <summary>
         /// 获取表单中的字符串，为验证SQL语句的安全性
         /// </summary>
         /// <param name="strName">表单名称</param>
         /// <returns></returns>
         public static string GetFormString(string strName)
         {
-            return GetFormString(strName, false);
-        }
-
-        /// <summary>
-        /// 获取表单数据并且验证是否SQL安全性
-        /// </summary>
-        /// <param name="strName">表单名称</param>
-        /// <param name="sqlSafeCheck">是否验证SQL的安全性</param>
-        /// <returns></returns>
-        public static string GetFormString(string strName, bool sqlSafeCheck)
-        {
-            if (HttpContext.Current.Request.Form[strName] == null)
-            {
-                return "";
-            }
-            if (!(!sqlSafeCheck || IsSafeSqlString(HttpContext.Current.Request.Form[strName])))
-            {
-                return "unsafe string";
-            }
             return HttpContext.Current.Request.Form[strName];
-        }
-        /// <summary>
-        /// 检测SQL语句是否安全
-        /// </summary>
-        /// <param name="str"></param>
-        /// <returns></returns>
-        private static bool IsSafeSqlString(string str)
-        {
-            return !Regex.IsMatch(str, @"[-|;|,|\/|\(|\)|\[|\]|\}|\{|%|@|\*|!|\']");
         }
         #endregion
 
@@ -153,63 +72,12 @@ namespace Climb.WebUtility
         }
 
         /// <summary>
-        /// 获取浮点型 参数
-        /// </summary>
-        /// <param name="strName"></param>
-        /// <param name="defValue"></param>
-        /// <returns></returns>
-        public static float GetQueryFloat(string strName, float defValue)
-        {
-            return StrToFloat(HttpContext.Current.Request.QueryString[strName], defValue);
-        }
-
-        /// <summary>
-        /// 获取字符型 参数
-        /// </summary>
-        /// <param name="strName"></param>
-        /// <returns></returns>
-        public static int GetQueryInt(string strName)
-        {
-            return StrToInt(HttpContext.Current.Request.QueryString[strName], 0);
-        }
-
-        /// <summary>
-        /// 获取字符型 参数
-        /// </summary>
-        /// <param name="strName">参数名称</param>
-        /// <param name="defValue">参数的默认值</param>
-        /// <returns></returns>
-        public static int GetQueryInt(string strName, int defValue)
-        {
-            return StrToInt(HttpContext.Current.Request.QueryString[strName], defValue);
-        }
-
-        /// <summary>
         /// 获取字符串型 参数
         /// </summary>
         /// <param name="strName"></param>
         /// <returns></returns>
         public static string GetQueryString(string strName)
         {
-            return GetQueryString(strName, false);
-        }
-
-        /// <summary>
-        /// 获取URL中的参数的值，返回stirng类型
-        /// </summary>
-        /// <param name="strName">URL参数名称</param>
-        /// <param name="sqlSafeCheck">是否验证SQL安全性</param>
-        /// <returns></returns>
-        public static string GetQueryString(string strName, bool sqlSafeCheck)
-        {
-            if (HttpContext.Current.Request.QueryString[strName] == null)
-            {
-                return "";
-            }
-            if (!(!sqlSafeCheck || IsSafeSqlString(HttpContext.Current.Request.QueryString[strName])))
-            {
-                return "unsafe string";
-            }
             return HttpContext.Current.Request.QueryString[strName];
         }
 
@@ -244,20 +112,6 @@ namespace Climb.WebUtility
             return HttpContext.Current.Request.Url.Host;
         }
 
-        /// <summary>
-        /// 获取Int型URL参数
-        /// </summary>
-        /// <param name="strName">URL参数名称</param>
-        /// <param name="defValue">默认值</param>
-        /// <returns></returns>
-        public static int GetInt(string strName, int defValue)
-        {
-            if (GetQueryInt(strName, defValue) == defValue)
-            {
-                return defValue;
-            }
-            return GetQueryInt(strName, defValue);
-        }
 
         /// <summary>
         /// 获取IP
@@ -277,22 +131,13 @@ namespace Climb.WebUtility
             {
                 userHostAddress = HttpContext.Current.Request.UserHostAddress;
             }
-            if (!(!string.IsNullOrEmpty(userHostAddress) && IsIpStr(userHostAddress)))
+            if (string.IsNullOrEmpty(userHostAddress))
             {
                 return "127.0.0.1";
             }
             return userHostAddress;
         }
-        /// <summary>
-        /// 判读是否是IP地址
-        /// </summary>
-        /// <param name="inputStr"></param>
-        /// <returns></returns>
-        private static bool IsIpStr(string inputStr)
-        {
-            IPAddress ip;
-            return IPAddress.TryParse(inputStr, out ip);
-        }
+
         ///<summary>
         /// 利用客户端ip得到客户端mac
         ///</summary>
