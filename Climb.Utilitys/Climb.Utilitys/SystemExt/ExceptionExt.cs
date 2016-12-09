@@ -20,7 +20,7 @@ namespace Climb.Utilitys.SystemExt
     /// <summary>
     /// 异常操作扩展
     /// </summary>
-    public static class ExceptionExtensions
+    public static class ExceptionExt
     {
         /// <summary>
         /// 格式化异常消息

@@ -24,38 +24,6 @@ namespace Climb.Utilitys.SystemExt
         public static readonly Regex PatternChina = new Regex("[\u4e00-\u9fa5]");
 
 
-        /// <summary>
-        /// 获取href里的内容
-        /// </summary>
-        public static readonly string PatternHref = @"(h|H)(r|R)(e|E)(f|F)\s*=\s*('|"")?((\w|\\|\/|\.|:|-|_)+)('|""| *|>)?";
-
-        /// <summary>
-        /// 获取src里边的内容
-        /// </summary>
-        public static readonly string PatternSrc = @"(s|S)(r|R)(c|C)\s*=\s*('|"")?((\w|\\|\/|\.|:|-|_)+)('|""| *|>)?";
-
-        /// <summary>
-        /// 获取所有img标签
-        /// </summary>
-        public static readonly string PatternImg =
-            "<img[^>]+src=\\s*(?:'(?<src>[^']+)'|\"(?<src>[^\"]+)\"|(?<src>[^>\\s]+))\\s*[^>]*>";
-
-        /// <summary>
-        /// 获取所有页面title 标签
-        /// </summary>
-        public static readonly string PatternTitle = @"<Title[^>]*>(?<Title>[\s\S]{10,})</Title>";
-
-        /// <summary>
-        /// 获取所有页面的
-        /// </summary>
-        public static readonly string PatternBody = @"<Body[^>]*>(?<Body>[\s\S]{10,})</body>";
-
-
-        /// <summary>
-        /// 获取所有的a标签
-        /// </summary>
-        public static readonly string PatternAtarg = @"<.?a(.|\n)*?>";
-
         #endregion
 
         #region 判断字符串是否匹配
@@ -71,6 +39,17 @@ namespace Climb.Utilitys.SystemExt
             return strValue != null && Regex.IsMatch(strValue, pattern);
         }
 
+
+        /// <summary>
+        /// 验证输入字符串是否与模式字符串匹配，匹配返回true
+        /// </summary>
+        /// <param name="input">输入的字符串</param>
+        /// <param name="pattern">模式字符串</param>
+        /// <param name="options">筛选条件</param>
+        public static bool IsMatch(string input, string pattern, RegexOptions options)
+        {
+            return input != null && Regex.IsMatch(input, pattern, options);
+        }
         #endregion
 
         #region 得到匹配的字符串

@@ -26,43 +26,6 @@ namespace Climb.Utilitys.IOExt
     /// </summary>
     public class FileExt
     {
-        #region Stream、byte[] 和 文件之间的转换
-
-        /// <summary>
-        /// 将流读取到缓冲区中
-        /// </summary>
-        /// <param name="stream">原始流</param>
-        public static byte[] StreamToBytes(Stream stream)
-        {
-            try
-            {
-                //创建缓冲区
-                byte[] buffer = new byte[stream.Length];
-
-                //读取流
-                stream.Read(buffer, 0, Convert.ToInt32(stream.Length));
-
-                //返回流
-                return buffer;
-            }
-            finally
-            {
-                //关闭流
-                stream.Close();
-            }
-        }
-
-        /// <summary>
-        /// 将 byte[] 转成 Stream
-        /// </summary>
-        /// <param name="bytes">bytes数组</param>
-        public static Stream BytesToStream(byte[] bytes)
-        {
-            Stream stream = new MemoryStream(bytes);
-            return stream;
-        }
-
-        #endregion
 
         #region file 和 stream 之间的转换
 
@@ -151,12 +114,12 @@ namespace Climb.Utilitys.IOExt
 
         #region 读取某个文件下的内容
         /// <summary>
-        /// 将文件读取到字符串中
+        /// 将文件读取到字符串中默认以ut8读取
         /// </summary>
         /// <param name="filePath">文件的绝对路径</param>
-        public static string FileToString(string filePath)
+        public static string ReadFile(string filePath)
         {
-            return FileToString(filePath, Encoding.Default);
+            return ReadFile(filePath, Encoding.UTF8);
         }
 
         /// <summary>
@@ -164,7 +127,7 @@ namespace Climb.Utilitys.IOExt
         /// </summary>
         /// <param name="filePath">文件的绝对路径</param>
         /// <param name="encoding">字符编码</param>
-        private static string FileToString(string filePath, Encoding encoding)
+        private static string ReadFile(string filePath, Encoding encoding)
         {
             //创建流读取器
             using (StreamReader reader = new StreamReader(filePath, encoding))
@@ -270,33 +233,6 @@ namespace Climb.Utilitys.IOExt
 
             //获取文件的大小
             return (int)fi.Length;
-        }
-
-        /// <summary>
-        /// 获取一个文件的长度,单位为KB
-        /// </summary>
-        /// <param name="filePath">文件的路径</param>
-        public static string GetFileSizeKb(string filePath)
-        {
-            //创建一个文件对象
-            FileInfo fi = new FileInfo(filePath);
-
-            //获取文件的大小
-
-            return IntExt.FormatPrice(Convert.ToDouble(fi.Length) / 1024, 1);
-        }
-
-        /// <summary>
-        /// 获取一个文件的长度,单位为MB
-        /// </summary>
-        /// <param name="filePath">文件的路径</param>
-        public static string GetFileSizeMb(string filePath)
-        {
-            //创建一个文件对象
-            FileInfo fi = new FileInfo(filePath);
-
-            //获取文件的大小
-            return IntExt.FormatPrice(Convert.ToDouble(fi.Length) / 1024 / 1024, 1);
         }
         #endregion
 

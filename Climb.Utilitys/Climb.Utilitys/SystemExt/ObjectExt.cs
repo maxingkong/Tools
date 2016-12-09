@@ -14,7 +14,9 @@
 
 using System;
 using System.IO;
+using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization.Json;
 
 // ReSharper disable All
 
@@ -129,6 +131,81 @@ namespace Climb.Utilitys.SystemExt
             }
         }
 
+        #endregion
+
+        #region object类型的扩展,转换成json字符串
+        /// <summary>object类型的扩展,转换成json字符串
+        /// </summary>
+        public static string ToJson<T>(this object obj) where T : class
+        {
+            DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(T));
+            MemoryStream stream = new MemoryStream();
+            serializer.WriteObject(stream, obj);
+            stream.Position = 0;
+            StreamReader sr = new StreamReader(stream);
+            string resultStr = sr.ReadToEnd();
+            sr.Close();
+            stream.Close();
+            return resultStr;
+        }
+        #endregion
+
+        #region 将json的字符串转换成对象
+        /// <summary> 将json的字符串转换成对象
+        /// </summary>
+        public static T FromJson<T>(this string json) where T : class
+        {
+            try
+            {
+                //json 必须为 {name:"value",name:"value"} 的格式(要符合JSON格式要求)
+                DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(T));
+                MemoryStream ms = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(json.ToCharArray()));
+                T obj = (T)serializer.ReadObject(ms);
+                ms.Close();
+                return obj;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+        #endregion
+
+        #region 将对象序列化成xml
+        /// <summary>将对象序列化成xml
+        /// </summary>
+        public static string ToXml<T>(this object obj) where T : class
+        {
+            DataContractSerializer serializer = new DataContractSerializer(typeof(T));
+            MemoryStream stream = new MemoryStream();
+            serializer.WriteObject(stream, obj);
+            stream.Position = 0;
+            StreamReader sr = new StreamReader(stream);
+            string resultStr = sr.ReadToEnd();
+            sr.Close();
+            stream.Close();
+            return resultStr;
+        }
+        #endregion
+
+        #region 将xml转换成对象
+        /// <summary> 将xml转换成对象
+        /// </summary>
+        public static T FromXml<T>(this string xml) where T : class
+        {
+            try
+            {
+                DataContractSerializer serializer = new DataContractSerializer(typeof(T));
+                MemoryStream ms = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(xml.ToCharArray()));
+                T obj = (T)serializer.ReadObject(ms);
+                ms.Close();
+                return obj;
+            }
+            catch
+            {
+                return null;
+            }
+        }
         #endregion
     }
 }

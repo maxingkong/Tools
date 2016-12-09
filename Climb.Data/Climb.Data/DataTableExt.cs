@@ -291,40 +291,5 @@ namespace Climb.Data
         }
 
         #endregion
-
-        #region datatable 转换实体类
-        /// <summary>
-        /// DataTable转换成实体列表
-        /// </summary>
-        /// <typeparam name="T">实体 T </typeparam>
-        /// <param name="table">datatable</param>
-        /// <returns></returns>
-        public static IList<T> DataTableToList<T>(DataTable table)
-            where T : class
-        {
-            if (!IsHasRows(table))
-                return new List<T>();
-
-            IList<T> list = new List<T>();
-            foreach (DataRow dr in table.Rows)
-            {
-                T model = Activator.CreateInstance<T>();
-                foreach (DataColumn dc in dr.Table.Columns)
-                {
-                    object drValue = dr[dc.ColumnName];
-                    PropertyInfo pi = model.GetType().GetProperty(dc.ColumnName);
-
-                    if (pi != null && pi.CanWrite && (drValue != null && !Convert.IsDBNull(drValue)))
-                    {
-                        pi.SetValue(model, drValue, null);
-                    }
-                }
-
-                list.Add(model);
-            }
-            return list;
-        }
-        #endregion
-
     }
 }

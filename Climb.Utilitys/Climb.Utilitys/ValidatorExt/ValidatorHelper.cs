@@ -229,5 +229,23 @@ namespace Climb.Utilitys.ValidatorExt
         }
         #endregion
 
+        #region 是否为银行卡号
+        /// <summary>
+        /// 是否为银行卡号,16或者为19位的银行卡
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static bool IsBankCard(string source)
+        {
+            if (string.IsNullOrEmpty(source))
+            {
+                return false;
+            }
+            source = source.Trim().Replace("^", "").Replace("$", "");
+            Regex reg = new Regex(@"^(\d{16}|\d{19})$");
+            return reg.IsMatch(source);
+        }
+        #endregion
+
     }
 }

@@ -12,6 +12,7 @@
 *************************************************/
 
 using System;
+using System.ComponentModel;
 using System.Reflection;
 
 namespace Climb.Utilitys.SystemExt
@@ -20,7 +21,7 @@ namespace Climb.Utilitys.SystemExt
     /// <summary>
     /// 枚举扩展
     /// </summary>
-    public static class EnumExtension
+    public static class EnumExt
     {
         /// <summary>
         /// 获得枚举字段的特性(Attribute)，该属性不允许多次定义。
@@ -33,5 +34,16 @@ namespace Climb.Utilitys.SystemExt
             FieldInfo field = value.GetType().GetField(value.ToString());
             return Attribute.GetCustomAttribute(field, typeof(T)) as T;
         }
+
+        /// <summary>
+        /// 获取当前枚举的描述
+        /// </summary>
+        /// <param name="value">输入枚举</param>
+        /// <returns>返回枚举的描述</returns>
+        public static string GetDescription( Enum value)
+        {
+            return   GetEnumAttribute<DescriptionAttribute>(value).Description;
+        }
+        
     }
 }

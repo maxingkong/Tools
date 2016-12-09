@@ -133,18 +133,6 @@ namespace Climb.Utilitys.SystemExt
 
         #endregion
 
-        #region byte 数组转换内存流
-        /// <summary>
-        /// 转换为内存流
-        /// </summary>
-        /// <param name="data">byte数组</param>
-        /// <returns>返回内存流</returns>
-        public static MemoryStream ToMemoryStream(this byte[] data)
-        {
-            return new MemoryStream(data);
-        }
-        #endregion
-
         #region byte数组转换base64字符串
         /// <summary>
         /// byte数组转换base64字符串
@@ -157,56 +145,7 @@ namespace Climb.Utilitys.SystemExt
         }
         #endregion
 
-        #region  位运算
 
-        /// <summary>
-        /// index从0开始
-        /// 获取取第index是否为1
-        /// </summary>
-        /// <param name="b"></param>
-        /// <param name="index"></param>
-        /// <returns></returns>
-        public static bool GetBit(this byte b, int index)
-        {
-            return (b & (1 << index)) > 0;
-        }
-
-        /// <summary>
-        /// 将第index位设为1
-        /// </summary>
-        /// <param name="b"></param>
-        /// <param name="index"></param>
-        /// <returns></returns>
-        public static byte SetBit(this byte b, int index)
-        {
-            b |= (byte)(1 << index);
-            return b;
-        }
-
-        /// <summary>
-        /// 将第index位设为0
-        /// </summary>
-        /// <param name="b"></param>
-        /// <param name="index"></param>
-        /// <returns></returns>
-        public static byte ClearBit(this byte b, int index)
-        {
-            b &= (byte)((1 << 8) - 1 - (1 << index));
-            return b;
-        }
-
-        /// <summary>
-        /// 将第index位取反
-        /// </summary>
-        /// <param name="b"></param>
-        /// <param name="index"></param>
-        /// <returns></returns>
-        public static byte ReverseBit(this byte b, int index)
-        {
-            b ^= (byte)(1 << index);
-            return b;
-        }
-        #endregion
 
     }
 }

@@ -29,7 +29,11 @@ namespace Climb.Data
         private delegate T Load(DataRow dataRecord); 
 
         private Load _handler;
-        private DataTableToEntity() { }
+
+        private DataTableToEntity()
+        {
+            
+        }
 
         public T Build(DataRow dataRecord)
         {

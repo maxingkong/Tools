@@ -21,27 +21,13 @@ namespace Climb.Utilitys
     /// </summary>
     public sealed class Tools
     {
-        #region 常用数组
-        /// <summary>
-        /// 数字字符数组
-        /// </summary>
-        public static readonly char[] NumCodeArray = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
-        /// <summary>
-        /// 大写字母数组
-        /// </summary>
-        public static readonly char[] UperCodeArray = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
-        /// <summary>
-        /// 小写字母数组
-        /// </summary>
-        public static readonly char[] LowerCodeArray = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
-        #endregion
 
         /// <summary>
         /// 根据身份证获取出生年月
         /// </summary>
         /// <param name="id">身份证号码</param>
         /// <returns>出生年月</returns>
-        public static DateTime GetBirthday(string id)
+        public static DateTime GetCardBirthday(string id)
         {
             string result;
             switch (id.Length)
@@ -58,15 +44,30 @@ namespace Climb.Utilitys
             return Convert.ToDateTime(result);
         }
 
+
+        /// <summary>
+        /// 扩展方法:手机号转化成189****6547形式
+        /// </summary>
+        /// <param name="phoneNumber"></param>
+        /// <returns>'Error': 号码格式出错</returns>
+        public static string GetHidePhoneNumber(string phoneNumber)
+        {
+            if (phoneNumber.Length == 11)
+            {
+                return phoneNumber.Substring(0, 3) + "****" + phoneNumber.Substring(7, 4);
+            }
+            return "Error";
+        }
+
         #region 敏感字符字符转换（450821198506010034转450821********0034）
         /// <summary>
         /// 敏感字符字符转换（450821198506010034转450821********0034）
         /// </summary>
-        /// <param name="number"></param>
-        /// <param name="start"></param>
-        /// <param name="length"></param>
-        /// <returns></returns>
-        public static string GetPrivateString(string number, int start, int length)
+        /// <param name="number">身份证号码</param>
+        /// <param name="start">从哪位开始</param>
+        /// <param name="length">隐藏的长度</param>
+        /// <returns>返回隐藏的身份证号码</returns>
+        public static string GetHideCardString(string number, int start, int length)
         {
             bool isDo = false;
             char[] s = number.ToCharArray();
@@ -91,22 +92,7 @@ namespace Climb.Utilitys
         }
         #endregion
 
-        #region 隐藏手机号码的中间几位
-        /// <summary>
-        /// 隐藏手机号码的中间几位
-        /// </summary>
-        /// <param name="mobile">电话号码</param>
-        /// <returns></returns>
-        public static string GetHideMobile(string mobile)
-        {
-            if (!string.IsNullOrEmpty(mobile))
-            {
-                string show = mobile.Substring(0, 3) + "******" + mobile.Substring(mobile.Length - 3);
-                return show;
-            }
-            return mobile;
-        }
-        #endregion
+
 
 
      

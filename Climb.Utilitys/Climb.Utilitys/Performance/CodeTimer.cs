@@ -12,9 +12,11 @@
 * 备注描述：
 *           
 *************************************************/
+
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading;
 
 namespace Climb.Utilitys.Performance
@@ -60,16 +62,14 @@ namespace Climb.Utilitys.Performance
         /// <param name="iteration"> 重复次数 </param>
         /// <param name="action"> 操作过程的Action </param>
         // ReSharper disable once MemberCanBePrivate.Global
-        public static void Time(string name, int iteration, Action action)
+        public static string  Time(string name, int iteration, Action action)
         {
             if (string.IsNullOrEmpty(name))
             {
-                return;
+                return "";
             }
-
-            ConsoleColor currentForeColor = Console.ForegroundColor;
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine(name);
+            StringBuilder sbBuilder=new StringBuilder();
+            sbBuilder.AppendLine(name);
 
             GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced);
             int[] gcCounts = new int[GC.MaxGeneration + 1];
@@ -88,21 +88,21 @@ namespace Climb.Utilitys.Performance
             ulong cpuCycles = GetCycleCount() - cycleCount;
             watch.Stop();
 
-            Console.ForegroundColor = currentForeColor;
-            Console.WriteLine("\tTime Elapsed:\t" + watch.Elapsed.TotalMilliseconds + "ms");
-            Console.WriteLine("\tCPU Cycles:\t" + cpuCycles.ToString("N0"));
+     
+            sbBuilder.AppendLine("\tTime Elapsed:\t" + watch.Elapsed.TotalMilliseconds + "ms");
+            sbBuilder.AppendLine("\tCPU Cycles:\t" + cpuCycles.ToString("N0"));
 
             for (int i = 0; i < GC.MaxGeneration; i++)
             {
                 int count = GC.CollectionCount(i) - gcCounts[i];
-                Console.WriteLine("\tGen" + i + "\t\t" + count);
+                sbBuilder.AppendLine("\tGen" + i + "\t\t" + count);
             }
 
-            Console.WriteLine();
+            sbBuilder.AppendLine();
+            return sbBuilder.ToString();
         }
 
         #endregion
-
 
         #region
         /// <summary>

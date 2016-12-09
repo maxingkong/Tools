@@ -32,34 +32,12 @@ namespace Climb.WebUtility
         }
 
         /// <summary>
-        /// 写cookie值
+        ///  写cookie 
         /// </summary>
         /// <param name="strName">名称</param>
         /// <param name="strValue">值</param>
-        /// <param name="domain"></param>
-        public static void WriteCookie(string strName, string strValue, string domain)
-        {
-            WriteCookie(strName, strValue, 0, domain);
-        }
-
-        /// <summary>
-        /// 写cookie值
-        /// </summary>
-        /// <param name="strName"></param>
-        /// <param name="strValue"></param>
-        /// <param name="days"></param>
-        public static void WriteCookie(string strName, string strValue, int days)
-        {
-            WriteCookie(strName, strValue, days, string.Empty);
-        }
-
-        /// <summary>
-        ///  写cookie 
-        /// </summary>
-        /// <param name="strName"></param>
-        /// <param name="strValue"></param>
-        /// <param name="day"></param>
-        /// <param name="doMain"></param>
+        /// <param name="day">过期时间</param>
+        /// <param name="doMain">cookie域</param>
         public static void WriteCookie(string strName, string strValue, int day, string doMain)
         {
             if (string.IsNullOrEmpty(strName))
@@ -84,8 +62,8 @@ namespace Climb.WebUtility
         /// <summary>
         /// 设置cookie的域
         /// </summary>
-        /// <param name="strName"></param>
-        /// <param name="domainValue"></param>
+        /// <param name="strName">cookie名称</param>
+        /// <param name="domainValue">cookie域</param>
         public static void SetCookieDomain(string strName, string domainValue)
         {
             if (string.IsNullOrEmpty(strName))
@@ -105,8 +83,8 @@ namespace Climb.WebUtility
         /// <summary>
         /// 删除cookie的方法
         /// </summary>
-        /// <param name="strName"></param>
-        /// <param name="domainValue"></param>
+        /// <param name="strName">cookie名称</param>
+        /// <param name="domainValue">cookie域</param>
         public static void RemoveCookie(string strName, string domainValue)
         {
             if (string.IsNullOrEmpty(strName))
@@ -128,9 +106,9 @@ namespace Climb.WebUtility
         /// <summary>
         /// 读取cookie 的值
         /// </summary>
-        /// <param name="key"></param>
-        /// <returns></returns>
-        public static string ReadCookie(string key)
+        /// <param name="key">cookie名称</param>
+        /// <returns>获取cookie的值</returns>
+        public static string GetCookie(string key)
         {
             string strValue = string.Empty;
             HttpCookie cookie =WebTools.Request.Cookies[key];

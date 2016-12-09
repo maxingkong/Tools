@@ -14,6 +14,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Text;
 using System.Threading;
 
 namespace Climb.Utilitys.Performance
@@ -39,16 +40,14 @@ namespace Climb.Utilitys.Performance
         /// <param name="name"> 操作标识名 </param>
         /// <param name="action"> 操作过程的Action </param>
         // ReSharper disable once MemberCanBePrivate.Global
-        public static void Ram(string name, Action action)
+        public static string  Ram(string name, Action action)
         {
             if (string.IsNullOrEmpty(name))
             {
-                return;
+                return "";
             }
-
-            ConsoleColor currentForeColor = Console.ForegroundColor;
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine(name);
+            StringBuilder sbBuilder =new StringBuilder();
+            sbBuilder.AppendLine(name);
 
             GC.Collect();
             long start = GC.GetTotalMemory(true);
@@ -56,13 +55,12 @@ namespace Climb.Utilitys.Performance
             GC.Collect();
             GC.WaitForFullGCComplete();
             long end = GC.GetTotalMemory(true);
-
-            Console.ForegroundColor = currentForeColor;
             long result = end - start;
-            Console.WriteLine("\tRam:\t" + result + " B");
-            Console.WriteLine("\tRam:\t" + result / 1024 + " KB");
-            Console.WriteLine("\tRam:\t" + result / 1024 / 1024 + " MB");
-            Console.WriteLine();
+            sbBuilder.AppendLine("\tRam:\t" + result + " B");
+            sbBuilder.AppendLine("\tRam:\t" + result / 1024 + " KB");
+            sbBuilder.AppendLine("\tRam:\t" + result / 1024 / 1024 + " MB");
+            sbBuilder.AppendLine();
+            return sbBuilder.ToString();
         }
     }
 }

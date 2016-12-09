@@ -40,7 +40,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CloneExt.cs" />
     <Compile Include="CollectionsExt\BloomFilter.cs" />
     <Compile Include="CollectionsExt\ComparisonHelper.cs" />
     <Compile Include="CollectionsExt\EqualityHelper.cs" />
@@ -48,12 +47,12 @@
     <Compile Include="CollectionsExt\SyncList.cs" />
     <Compile Include="Compression.cs" />
     <Compile Include="ConvertHelper.cs" />
-    <Compile Include="Extended.cs" />
     <Compile Include="IOExt\DirectoryExt.cs" />
     <Compile Include="IOExt\FileExt.cs" />
     <Compile Include="IsBetween.cs" />
     <Compile Include="MathExt\MathHelper.cs" />
     <Compile Include="ParamterCheckExt.cs" />
+    <Compile Include="PatternExt\CloneExt.cs" />
     <Compile Include="PatternExt\Singleton.cs" />
     <Compile Include="Performance\CodeRAM.cs" />
     <Compile Include="Performance\CodeTimer.cs" />
@@ -64,7 +63,7 @@
     <Compile Include="SystemExt\ByteExt.cs" />
     <Compile Include="SystemExt\DateTimeExt.cs" />
     <Compile Include="SystemExt\DictionaryExt.cs" />
-    <Compile Include="SystemExt\EnumExtension.cs" />
+    <Compile Include="SystemExt\EnumExt.cs" />
     <Compile Include="SystemExt\ExceptionExt.cs" />
     <Compile Include="SystemExt\IntExt.cs" />
     <Compile Include="SystemExt\ObjectExt.cs" />
@@ -72,17 +71,15 @@
     <Compile Include="SystemExt\ReflectionExt.cs" />
     <Compile Include="SystemExt\RegexExt.cs" />
     <Compile Include="SystemExt\SerializeExt.cs" />
+    <Compile Include="SystemExt\StreamExt.cs" />
     <Compile Include="SystemExt\StringExt.cs" />
     <Compile Include="SystemExt\TaskExt.cs" />
     <Compile Include="SystemExt\TypeExt.cs" />
     <Compile Include="Tools.cs" />
-    <Compile Include="TypeConvert.cs" />
     <Compile Include="ValidatorExt\ValidatorHelper.cs" />
     <Compile Include="WhereIfExtension.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DataTableExt" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

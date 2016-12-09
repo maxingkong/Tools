@@ -14,6 +14,7 @@
 
 using System;
 using System.Globalization;
+using System.Text;
 using Climb.Utility;
 
 namespace Climb.Utilitys.SystemExt
@@ -23,7 +24,7 @@ namespace Climb.Utilitys.SystemExt
     /// </summary>
     public static class RandomExt
     {
-        #region 生成一个指定范围的随机整数，该随机数范围包括最小值，但不包括最大值
+        #region 生成一个指定范围的随机整数
         /// <summary>
         /// 生成一个指定范围的随机整数，该随机数范围包括最小值，但不包括最大值
         /// </summary>
@@ -38,7 +39,7 @@ namespace Climb.Utilitys.SystemExt
 
         #region 1-int.MaxValue 随机数字
         /// <summary>
-        /// 得到一个随机数值
+        /// 得到一个随机数值 1-int Max
         /// </summary>
         /// <returns></returns>
         public static int GetRandomInt()
@@ -59,7 +60,7 @@ namespace Climb.Utilitys.SystemExt
 
         #endregion
 
-        #region 对一个数组进行随机排序
+        #region 对一个数组进行随机排序，数组会改变 不会产生的新的数组
         /// <summary>
         /// 对一个数组进行随机排序
         /// </summary>
@@ -102,8 +103,8 @@ namespace Climb.Utilitys.SystemExt
         /// <summary>
         /// 生成不重复的随机字符串
         /// </summary>
-        /// <param name="codeCount"></param>
-        /// <returns></returns>
+        /// <param name="codeCount">穗子字符串位数</param>
+        /// <returns>返回随机的字符串</returns>
         public static  string CreateCheckCodeNum(int codeCount)
         {
             int rep = 0;
@@ -118,12 +119,11 @@ namespace Climb.Utilitys.SystemExt
             }
             return str;
         }
-        //方法二：随机生成字符串（数字和字母混和）
         /// <summary>
-        /// 
+        /// 随机生成字符串（数字和字母混和）
         /// </summary>
-        /// <param name="codeCount"></param>
-        /// <returns></returns>
+        /// <param name="codeCount">随机位数</param>
+        /// <returns>返回随机的字符串（数字和字母混和）</returns>
         public static string CreateCheckCode(int codeCount)
         {
             int rep = 0;
@@ -149,67 +149,33 @@ namespace Climb.Utilitys.SystemExt
         }
         #endregion
 
-        #region 生成随机字符码
+        #region 生成纯数字的验证码
         /// <summary>
-        /// 从字符串里随机得到，规定个数的字符串.
+        /// 生成纯数字的验证码
         /// </summary>
-        /// <param name="arrary"></param>
-        /// <param name="codeCount"></param>
-        /// <returns></returns>
-        // ReSharper disable once MemberCanBePrivate.Global
-        public  static string CreateRandomCode(char [] arrary,int codeCount)
+        /// <param name="codeCount">随机位数</param>
+        /// <returns>返回随机的字符串</returns>
+        public static string CreateNumberCode(int codeCount)
         {
-            string randomCode = string .Empty ;
-            char[] charAry = arrary.Clone() as char[];
-            if (charAry == null) return randomCode;
-            int length = charAry.Length;
-            for (int i = 0; i < length; i++)
+            StringBuilder sbBuilder = new StringBuilder();
+            for (int i = 0; i < codeCount; i++)
             {
-                randomCode += charAry[GetRandomInt(0, length)];
-                if (randomCode.Length == codeCount) break;
+                sbBuilder.Append(GetRandomInt(0, 9));
             }
-            return randomCode;
-        }
-
-        /// <summary>
-        /// 随机数字 字符
-        /// </summary>
-        /// <param name="codeCount"></param>
-        /// <returns></returns>
-        public static string CreateRandNumberCode(int codeCount)
-        {
-            return CreateRandomCode(Tools.NumCodeArray, codeCount);
-        }
-        /// <summary>
-        /// 随机大写字符
-        /// </summary>
-        /// <param name="codeCount"></param>
-        /// <returns></returns>
-        public static string CreateRandUpperCode(int codeCount)
-        {
-            return CreateRandomCode(Tools.UperCodeArray, codeCount);
-        }
-        /// <summary>
-        /// 随机小写字符
-        /// </summary>
-        /// <param name="codeCount"></param>
-        /// <returns></returns>
-        public static string CreateRandLowerCode(int codeCount)
-        {
-            return CreateRandomCode(Tools.LowerCodeArray, codeCount);
-        }
-        /// <summary>
-        /// 随机 字符 大写字母加上 数字
-        /// </summary>
-        /// <param name="codeCount"></param>
-        /// <returns></returns>
-        public static string CreateRandUperNumberCode(int codeCount)
-        {
-            char[] combineAry = ArraryExt.CombineArrary(Tools.UperCodeArray, Tools.NumCodeArray);
-            return CreateRandomCode(combineAry, codeCount);
+            return sbBuilder.ToString();
         }
         #endregion
 
-       
+        #region 生成随机数的种子
+        /// <summary>生成随机数的种子
+        /// </summary>
+        public static int GetRandomSeed(int len = 8)
+        {
+            byte[] bytes = new byte[len];
+            System.Security.Cryptography.RNGCryptoServiceProvider rng = new System.Security.Cryptography.RNGCryptoServiceProvider();
+            rng.GetBytes(bytes);
+            return BitConverter.ToInt32(bytes, 0);
+        }
+        #endregion
     }
 }

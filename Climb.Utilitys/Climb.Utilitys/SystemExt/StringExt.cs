@@ -46,55 +46,6 @@ namespace Climb.Utilitys.SystemExt
         }
         #endregion
 
-        #region 判断字符串是否是整形
-        /// <summary>
-        /// 判断字符串是否是整形
-        /// </summary>
-        /// <param name="strValue">输入字符串</param>
-        /// <returns>数字返回true</returns>
-        public static bool IsInt(this string strValue)
-        {
-            int i;
-            return int.TryParse(strValue, out i);
-        }
-        #endregion
-
-        #region 字符串转换数字
-        /// <summary>
-        /// 转换成int数字
-        /// </summary>
-        /// <param name="number">字符串</param>
-        /// <returns>如果转换成功返回数字 转换失败返回0</returns>
-        public static int ToInt(this string number)
-        {
-            int resNum;
-            int.TryParse(number, out resNum);
-            return resNum;
-        }
-        /// <summary>
-        /// 转换成long数字
-        /// </summary>
-        /// <param name="number">字符串</param>
-        /// <returns>如果转换成功返回数字 转换失败返回0</returns>
-        public static long ToLong(this string number)
-        {
-            long resNum;
-            long.TryParse(number, out resNum);
-            return resNum;
-        }
-        /// <summary>
-        /// 转换成double数字
-        /// </summary>
-        /// <param name="number">字符串</param>
-        /// <returns>如果转换成功返回数字 转换失败返回0.0</returns>
-        public static double ToDouble(this string number)
-        {
-            double resNum;
-            double.TryParse(number, out resNum);
-            return resNum;
-        }
-        #endregion
-
         #region 获取GUID值
         /// <summary>
         /// 获取GUID值
@@ -341,16 +292,17 @@ namespace Climb.Utilitys.SystemExt
         }
         #endregion
 
-        #region
+        #region 分割字符串
         /// <summary>分割字符串
         /// </summary>
         public static string[] StringSplit(string inputStr, string splitStr)
         {
-            if (string.IsNullOrEmpty(inputStr) || string.IsNullOrEmpty(splitStr))
+            if (inputStr.IsNullOrEmpty())
             {
                 return new string[] { };
             }
             return inputStr.Split(new[] { splitStr }, StringSplitOptions.RemoveEmptyEntries);
+   
         }
         #endregion
     }

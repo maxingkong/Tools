@@ -39,77 +39,6 @@ namespace Climb.Utilitys.IOExt
                 Directory.CreateDirectory(dirPath);
             }
         }
-
-        #region 生成日期目录
-
-        /// <summary>
-        /// 生成日期 文件夹    格式：yyyy\mm\dd
-        /// </summary>
-        /// <remarks>
-        /// 生成时间目录   返回 例如： c:\directory\2009\03\01
-        /// </remarks>
-        /// <param name="rootPath">绝对路径   [在此目录下建日期目录]</param>
-        /// <returns>返回完整路径  </returns>
-        public static string CreateDirectoryByDate(string rootPath)
-        {
-            return CreateDirectoryByDate(rootPath, "yyyy-MM-dd");
-        }
-
-        /// <summary>
-        /// 相应格式生成日期目录
-        /// </summary>
-        /// <remarks>
-        /// formatString:
-        ///              yyyy-MM-dd        :2009\03\01
-        ///              yyyy-MM-dd-HH     :2009\03\01\01
-        /// </remarks>
-        /// <param name="rootPath">绝对路径   [在此目录下建日期目录]</param>
-        /// <param name="formatString">格式</param>
-        /// <returns>返回完整路径 </returns>
-        public static string CreateDirectoryByDate(string rootPath, string formatString)
-        {
-            if (!IsExistDirectory(rootPath))
-                throw new DirectoryNotFoundException("the rootPath is not found");
-
-            //小时目录
-            bool hour;
-
-            switch (formatString)
-            {
-                case "yyyy-MM-dd":
-                    hour = false;
-                    break;
-                case "yyyy-MM-dd-HH":
-                    hour = true;
-                    break;
-                default:
-                    hour = false;
-                    break;
-            }
-
-            string tempPath = Path.Combine(rootPath, DateTime.Now.Year.ToString(CultureInfo.InvariantCulture)) ;
-
-            CreateDirectory(tempPath);
-
-            tempPath = tempPath + "\\" + DateTime.Now.Month.ToString("00");
-
-            CreateDirectory(tempPath);
-
-            tempPath = tempPath + "\\" + DateTime.Now.Day.ToString("00");
-
-            CreateDirectory(tempPath);
-
-            if (hour)
-            {
-                tempPath = tempPath + "\\" + DateTime.Now.Hour.ToString("00");
-
-                CreateDirectory(tempPath);
-            }
-
-            return tempPath;
-        }
-
-        #endregion
         #endregion
 
         #region 删除指定目录
@@ -146,7 +75,7 @@ namespace Climb.Utilitys.IOExt
                     File.Delete(item);
                 }
                 //删除目录中所有的子目录
-                string[] directoryNames = GetDirectoryDirs(dirPath);
+                string[] directoryNames = GetDirectories(dirPath);
                 foreach (var item in directoryNames)
                 {
                     Directory.Delete(item);
@@ -165,7 +94,7 @@ namespace Climb.Utilitys.IOExt
         public static string[] GetFileNames(string directoryPath)
         {
             //如果目录不存在，则抛出异常
-            if (!IsExistDirectory(directoryPath))
+            if (!Directory.Exists(directoryPath))
             {
                 throw new FileNotFoundException();
             }
@@ -184,7 +113,7 @@ namespace Climb.Utilitys.IOExt
         public static string[] GetFileNames(string directoryPath, string searchPattern, bool isSearchChild)
         {
             //如果目录不存在，则抛出异常
-            if (!IsExistDirectory(directoryPath))
+            if (!Directory.Exists(directoryPath))
             {
                 throw new FileNotFoundException();
             }
@@ -197,18 +126,6 @@ namespace Climb.Utilitys.IOExt
             {
                 throw new ArgumentException(ex.Message);
             }
-        }
-        #endregion
-
-        #region 获取指定目录文件夹目录集合
-        /// <summary>
-        /// 获取某个文件夹下的文件目录集合
-        /// </summary>
-        /// <param name="dirPath">文件夹路径</param>
-        /// <returns>返回文件夹的路径集合</returns>
-        public static string[] GetDirectoryDirs(string dirPath)
-        {
-            return Directory.GetDirectories(dirPath);
         }
         #endregion
 
@@ -290,34 +207,7 @@ namespace Climb.Utilitys.IOExt
 
             return freefreeBytesAvailable;
         }
-        /// <summary>
-        /// 计算字节的 kb数量
-        /// </summary>
-        /// <param name="byteCount"></param>
-        /// <returns></returns>
-        public static ulong ConvertByteCountToKByteCount(ulong byteCount)
-        {
-            return byteCount / 1024;
-        }
-        /// <summary>
-        /// 计算字节mb数量
-        /// </summary>
-        /// <param name="kByteCount"></param>
-        /// <returns></returns>
-        public static ulong ConvertKByteCountToMByteCount(ulong kByteCount)
-        {
-            return kByteCount/1024;
-        }
 
-        /// <summary>
-        /// 计算gb书了
-        /// </summary>
-        /// <param name="kByteCount"></param>
-        /// <returns></returns>
-        public static float ConvertMByteCountToGByteCount(float kByteCount)
-        {
-            return kByteCount / 1024;
-        }
 
         #endregion
 
@@ -365,15 +255,6 @@ namespace Climb.Utilitys.IOExt
             {
                 dir.Create();
             }
-        }
-
-        /// <summary>
-        /// 检测指定目录是否存在
-        /// </summary>
-        /// <param name="directoryPath">目录的绝对路径</param>
-        public static bool IsExistDirectory(string directoryPath)
-        {
-            return Directory.Exists(directoryPath);
         }
 
         /// <summary>
@@ -452,15 +333,6 @@ namespace Climb.Utilitys.IOExt
         }
 
         /// <summary>
-        /// 取系统目录
-        /// </summary>
-        /// <returns></returns>
-        public static string GetSystemDirectory()
-        {
-            return Environment.SystemDirectory;
-        }
-
-        /// <summary>
         /// 取系统的特别目录
         /// </summary>
         /// <param name="folderType"></param>
@@ -468,15 +340,6 @@ namespace Climb.Utilitys.IOExt
         public static string GetSpeicalFolder(Environment.SpecialFolder folderType)
         {
             return Environment.GetFolderPath(folderType);
-        }
-
-        /// <summary>
-        /// 返回当前系统的临时目录
-        /// </summary>
-        /// <returns></returns>
-        public static string GetTempPath()
-        {
-            return Path.GetTempPath();
         }
 
         /// <summary>
@@ -495,15 +358,6 @@ namespace Climb.Utilitys.IOExt
         public static void SetCurrentDirectory(string path)
         {
             Directory.SetCurrentDirectory(path);
-        }
-
-        /// <summary>
-        /// 取路径中不充许存在的字符
-        /// </summary>
-        /// <returns></returns>
-        public static char[] GetInvalidPathChars()
-        {
-            return Path.GetInvalidPathChars();
         }
 
         /// <summary>

@@ -13,7 +13,10 @@
 *************************************************/
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
+
 // ReSharper disable All
 
 namespace Climb.Utilitys.SystemExt
@@ -29,11 +32,11 @@ namespace Climb.Utilitys.SystemExt
         /// </summary>
         /// <param name="datetimebTime">开始时间</param>
         /// <param name="dareruneeTime">结束时间</param>
-        /// <returns>返回时间差的字符串</returns>
+        /// <returns>返回时间差的字符串 如返回差一个月 1日   几个小时前或者 几分钟前</returns>
         public static string DateDiff(DateTime datetimebTime, DateTime dareruneeTime)
         {
             string dateDiff;
-            TimeSpan ts = dareruneeTime - datetimebTime;
+            TimeSpan ts = GetTimeSpan(datetimebTime, dareruneeTime);
             if (ts.Days >= 1)
             {
                 dateDiff = datetimebTime.Month.ToString(CultureInfo.InvariantCulture) + "月" +
@@ -71,100 +74,6 @@ namespace Climb.Utilitys.SystemExt
         }
         #endregion
 
-        #region 格式化日期
-
-        /// <summary>
-        /// 格式化日期
-        /// </summary>
-        /// <param name="dateTime">日期时间</param>
-        /// <param name="dateMode">显示模式
-        /// 0--->yyyy-MM-dd
-        /// 1--->yyyy-MM-dd HH:mm:ss
-        /// 2--->yyyy/MM/dd
-        /// 3--->yyyy年MM月dd日
-        /// 4--->MM-dd
-        /// 5--->MM/dd
-        /// 6--->MM月dd日
-        /// 7--->yyyy-MM
-        /// 8--->yyyy/MM
-        /// 9--->yyyy年MM月
-        /// 没有默认时间格式
-        /// </param>
-        /// <returns>0-9种模式的日期</returns>
-        // ReSharper disable once MemberCanBePrivate.Global
-        public static string FormatDate(DateTime dateTime, string dateMode)
-        {
-            switch (dateMode)
-            {
-                case "0":
-                    return dateTime.ToString("yyyy-MM-dd");
-                case "1":
-                    return dateTime.ToString("yyyy-MM-dd HH:mm:ss");
-                case "2":
-                    return dateTime.ToString("yyyy/MM/dd");
-                case "3":
-                    return dateTime.ToString("yyyy年MM月dd日");
-                case "4":
-                    return dateTime.ToString("MM-dd");
-                case "5":
-                    return dateTime.ToString("MM/dd");
-                case "6":
-                    return dateTime.ToString("MM月dd日");
-                case "7":
-                    return dateTime.ToString("yyyy-MM");
-                case "8":
-                    return dateTime.ToString("yyyy/MM");
-                case "9":
-                    return dateTime.ToString("yyyy年MM月");
-                case "10":
-                    return dateTime.ToString("HH:mm:ss");
-                case "11":
-                    return dateTime.ToString("HH:mm");
-                case "12":
-                    return dateTime.ToString("HH时mm分ss秒");
-                case "13":
-                    return dateTime.ToString("HH时mm分");
-                default:
-                    return dateTime.ToString(CultureInfo.InvariantCulture);
-            }
-        }
-        #endregion
-
-        #region 格式化时间
-        /// <summary>
-        /// 格式化时间
-        /// </summary>
-        /// <param name="dateTime">日期时间</param>
-        /// <param name="dateMode">显示模式
-        /// 0--->HH:mm:ss
-        /// 1--->HH:mm
-        /// 2--->HH时mm分ss秒
-        /// 3--->HH时mm分
-        /// 4--->HH时mm分
-        /// 5--->HH
-        /// 没有默认时间格式
-        /// </param>
-        /// <returns>0-5种模式的时间</returns>
-        public static string FormatTime(DateTime dateTime, string dateMode)
-        {
-            switch (dateMode)
-            {
-                case "1":
-                    return dateTime.ToString("HH:mm:ss");
-                case "2":
-                    return dateTime.ToString("HH:mm");
-                case "3":
-                    return dateTime.ToString("HH时mm分ss秒");
-                case "4":
-                    return dateTime.ToString("HH时mm分");
-                case "5":
-                    return dateTime.ToString("HH");
-                default:
-                    return dateTime.ToString(CultureInfo.InvariantCulture);
-            }
-        }
-        #endregion
-
         #region 两时间比较
         /// <summary>
         /// 两时间比较
@@ -180,23 +89,24 @@ namespace Climb.Utilitys.SystemExt
 
         #region 一天的开始时间
         /// <summary>
-        /// 一天的开始时间
+        /// 一天的开始时间 日期加上00:00:00.000
         /// </summary>
         /// <returns>返回时间字符串</returns>
-        public static string GetBeginDayStr()
+        public static string BeginDateTime(DateTime dateTime)
         {
-            return string.Concat(FormatDate(DateTime.Now, "0"), " 00:00:00.000");
+            return string.Concat(dateTime.ToString("yyyy-MM-dd"), " 00:00:00.000");
+            
         }
         #endregion
 
         #region 一天的结束时间
         /// <summary>
-        /// 获取 当前的时间一天的结束时间
+        /// 获取 当前的时间一天的结束时间 日期加上23:59:59.999
         /// </summary>
         /// <returns> 返回时间字符串</returns>
-        public static string GetEndDayStr()
+        public static string EndDatetime(DateTime dateTime)
         {
-            return string.Concat(FormatDate(DateTime.Now, "0"), " 23:59:59.999");
+            return string.Concat(dateTime.ToString("yyyy-MM-dd"), " 23:59:59.999");
         }
         #endregion
 
@@ -318,46 +228,6 @@ namespace Climb.Utilitys.SystemExt
         }
         #endregion
 
-        private static readonly TimeSpan OneMinute = new TimeSpan(0, 1, 0);
-        private static readonly TimeSpan TwoMinutes = new TimeSpan(0, 2, 0);
-        private static readonly TimeSpan OneHour = new TimeSpan(1, 0, 0);
-        private static readonly TimeSpan TwoHours = new TimeSpan(2, 0, 0);
-        private static readonly TimeSpan OneDay = new TimeSpan(1, 0, 0, 0);
-        private static readonly TimeSpan TwoDays = new TimeSpan(2, 0, 0, 0);
-        private static readonly TimeSpan OneWeek = new TimeSpan(7, 0, 0, 0);
-        private static readonly TimeSpan TwoWeeks = new TimeSpan(14, 0, 0, 0);
-        private static readonly TimeSpan OneMonth = new TimeSpan(31, 0, 0, 0);
-        private static readonly TimeSpan TwoMonths = new TimeSpan(62, 0, 0, 0);
-        private static readonly TimeSpan OneYear = new TimeSpan(365, 0, 0, 0);
-        private static readonly TimeSpan TwoYears = new TimeSpan(730, 0, 0, 0);
-
-        #region 时间和当前时间 对比 返回 字符串提示 如昨天 未来 现在 一个小时前 昨天
-        /// <summary>
-        /// 时间和当前时间 对比 返回 字符串提示
-        /// </summary>
-        /// <param name="date">时间</param>
-        /// <returns>返回字符串提示 未来 现在</returns>
-        public static string ToAgo(DateTime date)
-        {
-            TimeSpan timeSpan = GetTimeSpan(DateTime.Now, date);
-            if (timeSpan < TimeSpan.Zero) return "未来";
-            if (timeSpan < OneMinute) return "现在";
-            if (timeSpan < TwoMinutes) return "1 分钟前";
-            if (timeSpan < OneHour) return string .Format("{0} 分钟前", timeSpan.Minutes);
-            if (timeSpan < TwoHours) return "1 小时前";
-            if (timeSpan < OneDay) return string.Format("{0} 小时前", timeSpan.Hours);
-            if (timeSpan < TwoDays) return "昨天";
-            if (timeSpan < OneWeek) return string.Format("{0} 天前", timeSpan.Days);
-            if (timeSpan < TwoWeeks) return "1 周前";
-            if (timeSpan < OneMonth) return string.Format("{0} 周前", timeSpan.Days / 7);
-            if (timeSpan < TwoMonths) return "1 月前";
-            if (timeSpan < OneYear) return string.Format("{0} 月前", timeSpan.Days / 31);
-            if (timeSpan < TwoYears) return "1 年前";
-
-            return string.Format("{0} 年前", timeSpan.Days / 365);
-        }
-        #endregion
-
         #region 得到随机日期
         /// <summary>
         /// 得到随机日期
@@ -389,8 +259,6 @@ namespace Climb.Utilitys.SystemExt
             {
                 iTotalSecontds = (int)dTotalSecontds;
             }
-
-
             if (iTotalSecontds > 0)
             {
                 minTime = time2;
@@ -414,6 +282,59 @@ namespace Climb.Utilitys.SystemExt
             return minTime.AddSeconds(i);
         }
         #endregion
+
+        #region 将时间转换成int32类型 /默认情况下以1970.01.01为开始时间计算
+
+        /// <summary> 将时间转换成int32类型
+        /// </summary>
+        public static int DateDiffToInt32(DateTime end, int defaultValue = 0)
+        {
+            //默认情况下以1970.01.01为开始时间计算
+            int result = defaultValue;
+            try
+            {
+                DateTime startdate = new DateTime(1970, 1, 1,0, 0, 0);
+                // TimeSpan seconds = end.AddDays(1) - startdate;
+                TimeSpan seconds = end - startdate;
+                result = Convert.ToInt32(seconds.TotalSeconds);
+            }
+            catch
+            {
+                return defaultValue;
+            }
+            return result;
+        }
+        #endregion
+
+
+        #region 获取某个时间的中文星期
+        /// <summary>
+        /// 获取某个时间的中文星期
+        /// </summary>
+        public static string GetChineseWeekOfDay(DateTime time)
+        {
+            int dayOfWeek = (int)time.DayOfWeek;
+            return GetWeekDays().FirstOrDefault(x => x.Key == dayOfWeek).Value;
+        }
+
+        /// <summary>
+        /// 获取星期中的所有天数
+        /// </summary>
+        private static Dictionary<int, string> GetWeekDays()
+        {
+            var weekDict = new Dictionary<int, string>
+            {
+                {0, "星期日"},
+                {1, "星期一"},
+                {2, "星期二"},
+                {3, "星期三"},
+                {4, "星期四"},
+                {5, "星期五"},
+                {6, "星期六"}
+            };
+            return weekDict;
+        }
+        #endregion 
     }
 
 }
